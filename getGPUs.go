@@ -102,20 +102,15 @@ func main() {
 	datamaps := dataToArray(headers, data)
 
 	for i, adapter := range datamaps {
+		vendor, device := parseDevID(adapter["PNPDeviceID"])
+		date := parseDate(adapter["DriverDate"])
+
 		fmt.Printf("GPU %d:\n", i)
-		for key, element := range adapter {
-			if key == "PNPDeviceID" {
-				vendor, device := parseDevID(element)
-				fmt.Printf("Vendor ID: %s\n", vendor)
-				fmt.Printf("Device ID: %s\n", device)
-			} else if key == "DriverDate" {
-				date := parseDate(element)
-				fmt.Printf("DriverDate: %s/%s/%s\n", date[0], date[1], date[2])
-			} else {
-				fmt.Printf("%s: %s\n", key, element)
-			}
-		}
-		fmt.Printf("\n")
+		fmt.Printf("Name: %s\n", adapter["Name"])
+		fmt.Printf("DriverVersion: %s\n", adapter["DriverVersion"])
+		fmt.Printf("DriverDate: %s/%s/%s\n", date[0], date[1], date[2])
+		fmt.Printf("Vendor ID: %s\n", vendor)
+		fmt.Printf("Device ID: %s\n\n", device)
 	}
 
 	fmt.Printf("\nPress Enter to terminate.")
