@@ -66,7 +66,7 @@ func getInfo() ([]string, [][]string) {
 	return headers, data
 }
 
-func dataToArray(headers []string, data [][]string) []map[string]string {
+func dataToMap(headers []string, data [][]string) []map[string]string {
 	var output []map[string]string
 
 	for i, adapter := range data {
@@ -99,7 +99,7 @@ func parseDate(str string) []string {
 func main() {
 
 	headers, data := getInfo()
-	datamaps := dataToArray(headers, data)
+	datamaps := dataToMap(headers, data)
 
 	for i, adapter := range datamaps {
 		vendor, device := parseDevID(adapter["PNPDeviceID"])
